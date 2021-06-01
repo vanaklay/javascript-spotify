@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projet Spotify</title>
+    <script src="js/script.js" defer></script>
   </head>
   <body>
     <section>
@@ -16,22 +17,22 @@
       <h2>Résultats</h2>
       <ul id="res-ul">
         <li id="li-res-1" class="res-li">
-          <p>Time is rinning out - Muse</p>
-          <button id="btn-add-1">Ajouter</button>
+          Time is rinning out - Muse  
+          <button onclick="handleAddBtn(1)" id="btn-add-1">Ajouter</button>
         </li>
         <li id="li-res-2" class="res-li">
-          <p>It's raining man - Aleluia</p>
-          <button id="btn-add-2">Ajouter</button>
+          It's raining man - Aleluia 
+          <button  onclick="handleAddBtn(2)" id="btn-add-2">Ajouter</button>
+        </li>
+        <li id="li-res-3" class="res-li">
+          Sweet Escape - Gwen Stefani
+          <button  onclick="handleAddBtn(3)" id="btn-add-3">Ajouter</button>
         </li>
       </ul>
     </section>
     <section>
       <h2>Playlist</h2>
       <ul id="play-ul">
-        <li>
-          It's raining man - Aleluia
-          <button>Supprimer</button>
-        </li>
       </ul>
     </section>
     <section>
