@@ -52,8 +52,16 @@ function handleAddBtn(param){
 }
 
 function handleRmBtn(param){
-    
+    // selection de l'item a supprimer
+    // selectionner le parent ensuite target l'enfant
+
+    const liToRemove = document.getElementById(`li-res-${param}`);
+
+    playUl.removeChild(liToRemove);
+
 }
+
+// 
 
 /*
 btn2.addEventListener("click", ()=>{
@@ -64,3 +72,25 @@ btn2.addEventListener("click", ()=>{
 });
 */
 // ajouter une musique a la playlist play-ul
+
+const redirect_uri = "http://127.0.0.1:5500/javascript-spotify/index.html" // ceci est l'url de notre app
+
+
+const AUTHORIZE = "https://accounts.spotify.com/authorize"
+
+
+function requestAuthorization(){
+    const client_id = document.getElementById("clientId").value;
+    const client_secret = document.getElementById("clientSecret").value;
+    console.log("authorized");
+    localStorage.setItem("client_id", client_id);
+    localStorage.setItem("client_secret", client_secret);
+    console.log(client_id);    
+    console.log(client_secret);    
+    let url = AUTHORIZE;
+    url += "?client_id=" + client_id;
+    url += "&response_type=code";
+    url += "&redirect_uri=" + encodeURI(redirect_uri);
+    url += "&show_dialog=true";
+    window.location.href = url; // code pour afficher la boite de dialogue spotify
+}
