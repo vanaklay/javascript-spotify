@@ -1,4 +1,5 @@
 console.log("connecté");
+console.log(window);
 
 // faire un query select all pour recup tous les boutons de la liste resultat
 /*
@@ -73,10 +74,66 @@ btn2.addEventListener("click", ()=>{
 */
 // ajouter une musique a la playlist play-ul
 
-const redirect_uri = "http://127.0.0.1:5500/javascript-spotify/index.html" // ceci est l'url de notre app
-
-
+const redirect_uri = "http://127.0.0.1:5500/javascript-spotify/index.html" 
+// ceci est l'url de notre app
 const AUTHORIZE = "https://accounts.spotify.com/authorize"
+
+function onPageLoad(){
+    if (window.location.hash.length>0){
+    const token = window.location.hash.match(/access_token=([^&]*)/)[1];
+    console.log(token);
+    return token;
+    }
+    else{
+    console.log("not yet redirected");
+    return null;
+    }
+
+}
+const searchInput = document.getElementById("searchInput").value;
+console.log(searchInput);
+const searchBtn = document.getElementById("searchBtn")
+searchBtn.addEventListener('click',() => {
+   const token= onPageLoad();
+   if (token != null){
+       const req = searchInput
+       const type = "artist"
+       const url = `https://api.spotify.com/v1/search?q=${req}&type=${type}`
+       const options = {
+		method: "GET",
+		"Content-Type": "application/json",
+        headers: {
+         'Authorization': 'Bearer ' + token,
+        }
+        
+	};
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    }
+});
+
+
+const songInfo = document.getElementById("songInfo")
+songInfo.addEventListener('click',() => {
+   const token= onPageLoad();
+   if (token != null){
+       const id = "7fnufwv0FlzCJaMY1nXDlW"
+       const url = "https://api.spotify.com/v1/artists/540vIaP2JwjQb9dm3aArA4"
+       const options = {
+		method: "GET",
+		"Content-Type": "application/json",
+        headers: {
+         'Authorization': 'Bearer ' + token,
+        }
+        
+	};
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    }
+});
+
 
 
 function requestAuthorization(){
@@ -89,8 +146,13 @@ function requestAuthorization(){
     console.log(client_secret);    
     let url = AUTHORIZE;
     url += "?client_id=" + client_id;
-    url += "&response_type=code";
+    url += "&response_type=token";
     url += "&redirect_uri=" + encodeURI(redirect_uri);
     url += "&show_dialog=true";
+    url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
     window.location.href = url; // code pour afficher la boite de dialogue spotify
 }
+
+
+// http://127.0.0.1:5500/javascript-spotify/index.html?
+// code=AQCfOrwvxmCIZIgbIDHfYfXWoFNhcREQDZTIJROO76S0SWhkDLiGaS3JFIyN595nHyAdmQou-X7_LoFiDMRW7KmWbZfsKKH1stXVEVpYFEZKxA8iJdagYrycNShWvFxUvEoHma66aYl_jWLSuek-Wq8P_o5FfjeNuNdwKEy1bIq5fmGoFo97IbKoUV97mtVMaKC92nJI-A
