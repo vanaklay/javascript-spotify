@@ -97,7 +97,7 @@ searchBtn.addEventListener('click',() => {
    const token= onPageLoad();
    if (token != null){
        const req = searchInput
-       const type = "artist"
+       const type = "album"
        const url = `https://api.spotify.com/v1/search?q=${req}&type=${type}`
        const options = {
 		method: "GET",
@@ -106,10 +106,25 @@ searchBtn.addEventListener('click',() => {
          'Authorization': 'Bearer ' + token,
         }
         
-	};
+	    };
     fetch(url, options)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+        const array = data.albums.items
+        console.log(data);
+         array.forEach(item =>{
+
+        const newLi = document.createElement("li")
+        const liText = document.createTextNode(item.name)
+        newLi.append(liText)
+        const sep = document.createTextNode(' - ')
+        newLi.append(sep)
+        // const liArtiste = document.createTextNode(item.arti)
+
+
+
+         })
+        });
     }
 });
 
